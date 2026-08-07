@@ -1,0 +1,82 @@
+---
+import EditBox from '@components/EditBox.jsx';
+import Privacy from '@components/Privacy.astro';
+import {getLang, getLocale} from '@i18n/index';
+import { getRelativeLocaleUrl } from '@lib/localePaths';
+const { locale } = Astro.params;
+const l = getLang(locale);
+const lang = getLocale(locale);
+const t = l.editor;
+---
+
+<div class="container py-8 relative z-10 flex-1">
+    <h1 class="text-4xl text-center leading-[42px] font-extrabold mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">{t.feature}</h1>
+    <p class="text-center"><span>{t.noSign}</span><span>{t.online} </span><span class="bg-[#df41f8] inline-block font-extrabold bg-clip-text text-transparent">{t.free} ✨</span></p>
+    <div class="flex flex-col items-center gap-1 justify-center pt-4 pb-3">
+        <p class="text-xs opacity-80 text-center">{t.capture}</p>
+        <p class="text-xs opacity-80">{t.instantly}</p>
+    </div>
+    <div class="flex flex-col gap-3 justify-center text-xs hover:[&_a]:bg-blue-600 hover:[&_a]:text-white [&_a]:py-1 [&_a]:px-3 [&_a]:inline-block [&_a]:rounded-full [&_a]:bg-white [&_a]:text-blue-600 [&_a]:border [&_a]:border-blue-600 md:flex-row">
+        <div class="text-center"><a href={getRelativeLocaleUrl(lang, '/take-a-screenshot')} title={l.nav.screenshot.title}>📸 {l.nav.screenshot.title}</a></div>
+        <div class="text-center"><a href={getRelativeLocaleUrl(lang, '/screenshot-beautifier')} title={l.nav.beautifier.title}>🏞️ {l.nav.beautifier.title}</a></div>
+        <div class="text-center"><a href={getRelativeLocaleUrl(lang, '/image-compressor')} title={l.nav.compressor.title}>⬇️ {l.nav.compressor.title}</a></div>
+        <div class="text-center"><a href={getRelativeLocaleUrl(lang, '/convert')} title={l.nav.convert.title}>🔁 {l.nav.convert.title}</a></div>
+        <div class="text-center"><a href={getRelativeLocaleUrl(lang, '/long-image')} title={l.nav.longImage.title}>🧩 {l.nav.longImage.title}</a></div>
+    </div>
+    <div class="pt-8 pb-12 min-h-[716px]">
+        <EditBox client:only="react" />
+    </div>
+    <section id="how-to-take-a-screenshot">
+        <h2 class="text-xl font-extrabold mb-2 text-center">{t.how}</h2>
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 mb-3">
+            <div class="rounded-md bg-green-50/50 p-3">
+                <div class="mb-1 text-center">📸</div>
+                <h3 class="text-sm mb-1 text-center">{t.take}</h3>
+                <p class="text-xs text-slate-400 mt-1">{t.use}</p>
+            </div>
+            <div class="rounded-md bg-indigo-50/50 p-3">
+                <div class="mb-1 text-center">🪄</div>
+                <h3 class="text-sm mb-1 text-center">{t.more}</h3>
+                <p class="text-xs text-slate-400 mt-1">{t.moreUse}</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-3 mb-3">
+            <div class="rounded-md bg-blue-50/50 p-3">
+                <div class="mb-1 text-center">🖼️</div>
+                <h3 class="text-sm mb-1 text-center">{t.corp}</h3>
+                <p class="text-xs text-slate-400 mt-1">{t.corpCont}</p>
+            </div>
+            <div class="rounded-md bg-purple-50/50 p-3">
+                <div class="mb-1 text-center">🌊</div>
+                <h3 class="text-sm mb-1 text-center">{t.add}</h3>
+                <p class="text-xs text-slate-400 mt-1">{t.addCont}</p>
+            </div>
+            <div class="rounded-md bg-orange-50/50 p-3">
+                <div class="mb-1 text-center">🎯</div>
+                <h3 class="text-sm mb-1 text-center">{t.annotate}</h3>
+                <p class="text-xs text-slate-400 mt-1">{t.annotateCont}</p>
+            </div>
+        </div>
+    </section>
+    <Privacy />
+</div>
+<script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": l.title,
+    "description": l.description,
+    "operatingSystem": "ALL",
+    "applicationCategory": "BrowserApplication",
+    "browserRequirements": "requires HTML5 support",
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "2948",
+        "bestRating": "5"
+    },
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    }
+})}/>

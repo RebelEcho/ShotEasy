@@ -1,0 +1,139 @@
+---
+import Privacy from '@components/Privacy.astro';
+import LocalProcessingBlock from '@components/LocalProcessingBlock.astro';
+import SeoContentBlock from '@components/SeoContentBlock.astro';
+import ToolStructuredData from '@components/ToolStructuredData.astro';
+import { getLocale, getLang } from '@i18n/index';
+import { getRelativeLocaleUrl } from '@lib/localePaths';
+import { getToolSeoContent } from '@lib/toolSeoContent';
+import Screenshot from '@components/screenshot/Screenshot';
+const { locale } = Astro.params;
+const lang = getLocale(locale);
+const l = getLang(locale);
+const t = l.screenshot;
+interface FaqItem {
+    question: string;
+    answer: string;
+}
+interface ClusterLink {
+    href: string;
+    title: string;
+    description: string;
+}
+const faqItems: FaqItem[] = t.faq || [];
+const clusterLinks: ClusterLink[] = t.clusterLinks || [];
+const captureTechTitle = t.captureTechTitle || '基于浏览器原生屏幕捕获能力';
+const captureTechCont1 = t.captureTechCont1 || 'ShotEasy 使用 navigator.mediaDevices.getDisplayMedia 调用浏览器的屏幕捕获权限，不需要安装插件或截图软件。';
+const captureTechCont2 = t.captureTechCont2 || '你可以截取电脑桌面、浏览器标签页、微信聊天窗口、游戏画面或任意应用窗口，再直接裁剪、复制和保存，完全可以替代系统截图工具或单独的截图软件。';
+const seoContent = getToolSeoContent(lang, 'screenshot', t);
+---
+
+<div class="container py-8 relative z-10 flex-1">
+    <h1 class="text-4xl text-center leading-[42px] font-bold mb-0.5 bg-gradient-to-r from-gray-600 to-gray-800 bg-clip-text text-transparent">{t.h1 || t.title}</h1>
+    <p class="text-slate-600 text-center mb-2">{t.tip}</p>
+    {t.intro1 && <p class="text-slate-600 text-center text-sm max-w-3xl mx-auto mb-1">{t.intro1}</p>}
+    {t.intro2 && <p class="text-slate-600 text-center text-sm max-w-3xl mx-auto mb-3">{t.intro2}</p>}
+    <div class="pb-12 min-h-[320px]">
+        <Screenshot client:only="react" />
+    </div>
+    <section class="mb-3 rounded-md p-4 bg-sky-100/40 text-xs [&>p]:mb-1">
+        <div class="mb-1 text-sm">🏙️</div>
+        <h2 class="text-lg font-bold mb-2">{t.how}</h2>
+        <ol class="list-decimal list-inside [&_li]:py-1">
+            <li>{t.howCont1}</li>
+            <li>{t.howCont2}</li>
+            <li>{t.howCont3}</li>
+            <li>{t.howCont4}</li>
+            <li>{t.howCont5}</li>
+            <li>{t.howCont6}</li>
+            <li>{t.howCont7}</li>
+        </ol>
+    </section>
+    <section class="mb-3 rounded-md p-4 bg-pink-100/40 text-xs [&>p]:mb-1">
+        <div class="mb-1 text-sm">🤩</div>
+        <h2 class="text-lg font-bold mb-2">{t.why}</h2>
+        <p>{t.whyCont1}</p>
+        <p>{t.whyCont2}</p>
+        <p>{t.whyCont3}</p>
+    </section>
+    <section class="mb-3 rounded-md p-4 bg-blue-100/40 text-xs [&>p]:mb-1">
+        <div class="mb-1 text-sm">🖥️</div>
+        <h2 class="text-lg font-bold mb-2">{captureTechTitle}</h2>
+        <p>
+            <a
+                href="https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-mono rounded bg-white/80 px-1 py-0.5 text-blue-600 hover:underline"
+            >navigator.mediaDevices.getDisplayMedia</a>
+        </p>
+        <p>{captureTechCont1}</p>
+        <p>{captureTechCont2}</p>
+    </section>
+    <section class="mb-3 rounded-md p-4 bg-green-100/40 text-xs [&>p]:mb-1 [&_span]:inline-block [&_span]:rounded-sm [&_span]:bg-black/70 [&_span]:px-1.5 [&_span]:text-white">
+        <div class="mb-1 text-sm">📸</div>
+        <h2 class="text-lg font-bold mb-2">{t.can}</h2>
+        <h3 class="font-semibold mb-1 text-sm">{t.canWin}</h3>
+        <p>{t.canWin1}</p>
+        <p set:html={t.canWin2} />
+        <p set:html={t.canWin3} />
+        <h3 class="font-semibold mb-1 text-sm pt-4">{t.canMac}</h3>
+        <p>{t.canMac1}</p>
+        <h4 class="font-semibold mb-1 pt-2">1.{t.canMacScreen}</h4>
+        <p set:html={t.canMacScreen1} />
+        <h4 class="font-semibold mb-1 pt-2">2.{t.canMacWin}</h4>
+        <p set:html={t.canMacWin1} />
+        <h4 class="font-semibold mb-1 pt-2">3.{t.canMacCrop}</h4>
+        <p set:html={t.canMacCrop1} />
+    </section>
+    <LocalProcessingBlock />
+    <SeoContentBlock content={seoContent} />
+    {faqItems.length > 0 && (
+        <section class="mb-3 rounded-md p-4 bg-indigo-100/40 text-xs [&>p]:mb-1">
+            <div class="mb-1 text-sm">❔</div>
+            <h2 class="text-lg font-bold mb-2">{t.faqTitle}</h2>
+            {faqItems.map(item => (
+                <div class="mb-3 last:mb-0">
+                    <h3 class="font-semibold mb-1 text-sm">{item.question}</h3>
+                    <p>{item.answer}</p>
+                </div>
+            ))}
+        </section>
+    )}
+    {clusterLinks.length > 0 && (
+        <section class="mb-3 rounded-md p-4 bg-white/75 text-xs shadow-sm ring-1 ring-slate-200/70">
+            <h2 class="text-lg font-bold mb-2">{t.clusterTitle}</h2>
+            <div class="grid gap-2 md:grid-cols-3">
+                {clusterLinks.map(item => (
+                    <a href={getRelativeLocaleUrl(lang, item.href)} class="block rounded-md border border-slate-200 bg-white p-3 hover:border-blue-300 hover:text-blue-600">
+                        <h3 class="font-semibold mb-1 text-sm">{item.title}</h3>
+                        <p class="text-slate-600">{item.description}</p>
+                    </a>
+                ))}
+            </div>
+        </section>
+    )}
+    <Privacy />
+</div>
+<ToolStructuredData
+    name={t.title}
+    description={t.description}
+    keywords={t.keywords}
+    locale={lang}
+    browserRequirements="需要浏览器支持 Screen Capture API 与 HTML5 Canvas"
+    featureList={seoContent.featureList}
+/>
+{faqItems.length > 0 && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqItems.map(item => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer
+            }
+        }))
+    })}/>
+)}

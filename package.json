@@ -15,9 +15,9 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@astrojs/check": "^0.3.4",
-    "@astrojs/cloudflare": "^14.1.7",
+    "@astrojs/cloudflare": "11.2.0",
     "@astrojs/react": "^3.0.8",
-    "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/sitemap": "3.5.0",
     "@astrojs/tailwind": "^5.0.4",
     "@astrojs/vercel": "^6.1.0",
     "@emoji-mart/data": "^1.1.2",
@@ -31,7 +31,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "antd": "^5.12.2",
-    "astro": "^4.0.7",
+    "astro": "^4.16.19",
     "astro-seo": "^0.8.0",
     "clsx": "^2.0.0",
     "colorthief": "^2.4.0",
@@ -62,5 +62,10 @@
     "tinykeys": "^2.1.0",
     "typescript": "^5.2.2",
     "vite-plugin-wasm": "^3.6.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "zod": "^3.25.0"
+    }
   }
 }

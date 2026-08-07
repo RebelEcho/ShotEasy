@@ -63,9 +63,7 @@
     "typescript": "^5.2.2",
     "vite-plugin-wasm": "^3.6.0"
   },
-  "pnpm": {
-    "overrides": {
-      "zod": "^3.25.0"
-    }
+  "devDependencies": {
+    "wrangler": "^3.0.0"
   }
 }

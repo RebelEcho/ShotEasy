@@ -27,7 +27,7 @@ jobs:
           version: 9
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       # Cloudflare 单文件限制 25MB，需在构建前下载量化模型 model_quantized.onnx（6.6MB）
       # 替代 fp32 模型（25.9MB），模型文件必须位于 public/ 下，构建时才会被拷贝进 dist/

@@ -5,18 +5,10 @@ import { env, AutoModel, AutoProcessor } from '@huggingface/transformers';
 // 对应文件:
 //   public/models/Xenova/modnet/config.json
 //   public/models/Xenova/modnet/preprocessor_config.json
-//   public/models/Xenova/modnet/onnx/model.onnx          (fp32, 25.9MB - Vercel 用)
-//   public/models/Xenova/modnet/onnx/model_quantized.onnx (INT8, 6.6MB - Cloudflare 用)
+//   public/models/Xenova/modnet/onnx/model.onnx (fp32, 25.9MB)
 env.localModelPath = '/models/';
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
-
-// 双部署支持：
-// - Vercel: 不限制文件大小，用 fp32 模型（精度高）
-// - Cloudflare: 单文件 25MB 限制，用 INT8 量化模型（6.6MB，精度略低但够用）
-// 通过 import.meta.env.VITE_DEPLOY_TARGET 读取（由 .env 注入，默认 vercel）
-const DEPLOY_TARGET = import.meta.env.VITE_DEPLOY_TARGET || 'vercel';
-const USE_QUANTIZED = DEPLOY_TARGET === 'cloudflare';
 
 export const MODNET_MODEL_ID = 'Xenova/modnet';
 
@@ -90,7 +82,6 @@ export async function getModnetInstance() {
             env.backends.onnx.wasm.proxy = false;
         }
 
-        const quantized = USE_QUANTIZED;
         const devices = [];
 
         const hasWebGpu = await probeWebGpuAdapter();
@@ -104,7 +95,7 @@ export async function getModnetInstance() {
             }
             try {
                 const [model, processor] = await Promise.all([
-                    AutoModel.from_pretrained(MODNET_MODEL_ID, { device, quantized }),
+                    AutoModel.from_pretrained(MODNET_MODEL_ID, { device }),
                     AutoProcessor.from_pretrained(MODNET_MODEL_ID),
                 ]);
                 currentBackend = device;

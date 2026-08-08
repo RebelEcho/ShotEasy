@@ -1,0 +1,43 @@
+name: Vercel Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Download models
+        run: |
+          $base = 'https://hf-mirror.com/Xenova/modnet/resolve/main'
+          $dst = 'public/models/Xenova/modnet'
+          mkdir -p "$dst/onnx"
+          Invoke-WebRequest "$base/config.json" -OutFile "$dst/config.json"
+          Invoke-WebRequest "$base/preprocessor_config.json" -OutFile "$dst/preprocessor_config.json"
+          Invoke-WebRequest "$base/onnx/model.onnx" -OutFile "$dst/onnx/model.onnx"
+
+      - name: Build
+        run: pnpm exec astro build
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: .

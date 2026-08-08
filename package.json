@@ -62,8 +62,5 @@
     "tinykeys": "^2.1.0",
     "typescript": "^5.2.2",
     "vite-plugin-wasm": "^3.6.0"
-  },
-  "devDependencies": {
-    "wrangler": "^3.0.0"
   }
 }

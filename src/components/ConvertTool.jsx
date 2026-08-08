@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, InputNumber, Select, Tooltip, Upload, message } from 'antd';
+import { Button, InputNumber, Select, Tooltip, Upload, message, Space, Input } from 'antd';
 import JSZip from 'jszip';
 import { Icon } from './Icons';
 import { UploadDragger } from './UploadDragger';
@@ -704,19 +704,28 @@ export default function ConvertTool({ copy = {} }) {
                     {(mode === 'image-to-webp' || mode === 'image-to-jpg') && (
                         <div className="flex min-w-0 w-full gap-2 items-center min-[1300px]:w-auto">
                             <label className="shrink-0 font-semibold">{copy.quality || 'Quality'}:</label>
-                            <InputNumber className="min-w-0 flex-1 min-[1300px]:w-28 min-[1300px]:flex-none" size="small" min={1} max={100} value={quality} addonAfter="%" onChange={updateQuality} disabled={loading} />
+                            <Space.Compact className="min-w-0 flex-1 min-[1300px]:w-28 min-[1300px]:flex-none">
+                                <InputNumber className="w-full" size="small" min={1} max={100} value={quality} onChange={updateQuality} disabled={loading} />
+                                <Input allowClear maxLength={3} style={{ width: 32 }} defaultValue="%" />
+                            </Space.Compact>
                         </div>
                     )}
                     {mode === 'pdf-to-images' && (
                         <div className="flex min-w-0 w-full gap-2 items-center min-[1300px]:w-auto">
                             <label className="shrink-0 font-semibold">{copy.pdfScale || 'PDF Scale'}:</label>
-                            <InputNumber className="min-w-0 flex-1 min-[1300px]:w-28 min-[1300px]:flex-none" size="small" min={0.5} max={4} step={0.5} value={pdfScale} addonAfter="x" onChange={updatePdfScale} disabled={loading} />
+                            <Space.Compact className="min-w-0 flex-1 min-[1300px]:w-28 min-[1300px]:flex-none">
+                                <InputNumber className="w-full" size="small" min={0.5} max={4} step={0.5} value={pdfScale} onChange={updatePdfScale} disabled={loading} />
+                                <Input allowClear maxLength={3} style={{ width: 32 }} defaultValue="x" />
+                            </Space.Compact>
                         </div>
                     )}
                     {mode === 'png-to-ico' && (
                         <div className="flex min-w-0 w-full gap-2 items-center min-[1300px]:w-auto">
                             <label className="shrink-0 font-semibold">{copy.icoSize || 'ICO Size'}:</label>
-                            <InputNumber className="min-w-0 flex-1 min-[1300px]:w-32 min-[1300px]:flex-none" size="small" min={16} max={256} step={16} value={icoSize} addonAfter="px" onChange={updateIcoSize} disabled={loading} />
+                            <Space.Compact className="min-w-0 flex-1 min-[1300px]:w-32 min-[1300px]:flex-none">
+                                <InputNumber className="w-full" size="small" min={16} max={256} step={16} value={icoSize} onChange={updateIcoSize} disabled={loading} />
+                                <Input allowClear maxLength={3} style={{ width: 40 }} defaultValue="px" />
+                            </Space.Compact>
                         </div>
                     )}
                     <div className="w-full text-right min-[1300px]:flex-1">

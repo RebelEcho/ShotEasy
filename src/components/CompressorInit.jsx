@@ -14,9 +14,9 @@ export default function CompressorInit() {
         const importIcon = modules[`./Icons.jsx`]();
         const loadList = [
             import("jszip"),
-            fetch(new URL("../engines/png.wasm", import.meta.url)),
-            fetch(new URL("../engines/gif.wasm", import.meta.url)),
-            fetch(new URL("../engines/avif.wasm", import.meta.url)),
+            fetch(new URL("../engines/png.wasm?url", import.meta.url)),
+            fetch(new URL("../engines/gif.wasm?url", import.meta.url)),
+            fetch(new URL("../engines/avif.wasm?url", import.meta.url)),
             import("../engines/WorkerPreview?worker"),
             import("../engines/WorkerCompress?worker"),
             importIcon,

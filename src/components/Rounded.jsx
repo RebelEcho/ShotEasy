@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { InputNumber, Button, message } from 'antd';
+import { InputNumber, Button, message, Space, Input } from 'antd';
 import { RadiusUpleftOutlined, RadiusUprightOutlined, RadiusBottomleftOutlined, RadiusBottomrightOutlined } from '@ant-design/icons';
 import { Icon } from './Icons'
 import { DownBtn } from './DownBtn';
@@ -122,7 +122,10 @@ export default function Rounded() {
                 <div className="flex gap-4 justify-center flex-col-reverse bg-white p-2 border-b shadow-md md:flex-row md:justify-between">
                     <div className="flex items-center justify-center gap-3">
                         <div className="w-32">
-                            <InputNumber min={0} keyboard defaultValue={roundValue} addonAfter="px" onChange={handleInput} />
+                            <Space.Compact style={{ width: 128 }}>
+                                <InputNumber min={0} keyboard defaultValue={roundValue} onChange={handleInput} />
+                                <Input allowClear maxLength={3} style={{ width: 48 }} defaultValue="px" />
+                            </Space.Compact>
                         </div>
                         <Button size="small" type={radius.includes('tl')?'primary':'dashed'} shape="circle" onClick={() => handleRadiusChange('tl')} icon={<RadiusUpleftOutlined />} />
                         <Button size="small" type={radius.includes('tr')?'primary':'dashed'} shape="circle" onClick={() => handleRadiusChange('tr')} icon={<RadiusUprightOutlined />} />

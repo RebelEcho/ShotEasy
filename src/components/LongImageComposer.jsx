@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, InputNumber, Radio, Select, Upload, Tooltip, message } from 'antd';
+import { Button, InputNumber, Radio, Select, Upload, Tooltip, message, Space, Input } from 'antd';
 import { Icon } from './Icons';
 import { UploadDragger } from './UploadDragger';
 import { FormatTag } from './FormatTag';
@@ -500,15 +500,24 @@ const LongImageComposer = () => {
                                 { value: 'pixel', label: '固定像素' },
                             ]}
                         />
-                        <InputNumber className="w-32" size="small" min={1} value={option.sizeValue} addonAfter={sizeUnit} onChange={(value) => updateOption('sizeValue', value || 1)} />
+                        <Space.Compact style={{ width: 128 }}>
+                            <InputNumber className="w-full" size="small" min={1} value={option.sizeValue} onChange={(value) => updateOption('sizeValue', value || 1)} />
+                            <Input allowClear maxLength={6} style={{ width: 48 }} defaultValue={sizeUnit} />
+                        </Space.Compact>
                     </div>
                     <div className="flex gap-2 items-center">
                         <label className="font-semibold">边距:</label>
-                        <InputNumber className="w-28" size="small" min={0} value={option.margin} addonAfter="px" onChange={(value) => updateOption('margin', value || 0)} />
+                        <Space.Compact style={{ width: 112 }}>
+                            <InputNumber className="w-full" size="small" min={0} value={option.margin} onChange={(value) => updateOption('margin', value || 0)} />
+                            <Input allowClear maxLength={3} style={{ width: 40 }} defaultValue="px" />
+                        </Space.Compact>
                     </div>
                     <div className="flex gap-2 items-center">
                         <label className="font-semibold">间隔:</label>
-                        <InputNumber className="w-28" size="small" value={option.gap} addonAfter="px" onChange={(value) => updateOption('gap', value || 0)} />
+                        <Space.Compact style={{ width: 112 }}>
+                            <InputNumber className="w-full" size="small" value={option.gap} onChange={(value) => updateOption('gap', value || 0)} />
+                            <Input allowClear maxLength={3} style={{ width: 40 }} defaultValue="px" />
+                        </Space.Compact>
                     </div>
                     <div className="flex gap-2 items-center">
                         <label className="font-semibold">格式:</label>

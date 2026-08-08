@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Slider, Select, InputNumber, Button, ColorPicker, Tooltip } from 'antd';
+import { Slider, Select, InputNumber, Button, ColorPicker, Tooltip, Space, Input } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { compressorState } from '@states/compressor';
 
@@ -111,7 +111,10 @@ export default observer(() => {
                 />
                 {
                     sizeType !== 'auto' &&
-                    <InputNumber className="w-48" size="small" value={size} addonAfter={`px, ${sizeType == 'fitWidth' ? 'H':'W'} auto`} min={1} max={100000} onChange={onSizeChange} />
+                    <Space.Compact style={{ width: 192 }}>
+                        <InputNumber className="w-full" size="small" value={size} min={1} max={100000} onChange={onSizeChange} />
+                        <Input allowClear maxLength={20} style={{ width: 96 }} defaultValue={`px, ${sizeType == 'fitWidth' ? 'H':'W'} auto`} />
+                    </Space.Compact>
                 }
             </div>
             <div className="flex-1 text-right">
